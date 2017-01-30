@@ -18,6 +18,9 @@ from evennia.utils import logger
 
 from django.contrib.auth import login
 
+import json
+from django import http
+
 _BASE_CHAR_TYPECLASS = settings.BASE_CHARACTER_TYPECLASS
 
 
@@ -124,3 +127,25 @@ def admin_wrapper(request):
     Wrapper that allows us to properly use the base Django admin site, if needed.
     """
     return staff_member_required(site.index)(request)
+
+def gamestats(request):
+    """
+    """
+    # return http.HttpResponse(json.dumps(_gamestats(), content_type='application/json'))
+    selected_stats = [
+        "num_players_connected",
+        "num_players_registered",
+        "num_players_connected_recent",
+        "num_players_registered_recent",
+        'num_rooms',
+        'num_exits',
+        'num_objects',
+        "num_objects",
+        "num_characters",
+        "num_others"
+    ]
+    
+    game_stats=_gamestats()
+    stats = {k:game_stats[k] for k in selected_stats }
+    
+    return http.HttpResponse(json.dumps(stats), content_type='application/json')

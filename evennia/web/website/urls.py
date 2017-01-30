@@ -16,6 +16,8 @@ admin.autodiscover()
 urlpatterns = [
    url(r'^$', website_views.page_index, name="index"),
    url(r'^tbi/', website_views.to_be_implemented, name='to_be_implemented'),
+   
+   url(r'^gamestats', website_views.gamestats, name="gamestats"),
 
    # User Authentication (makes login/logout url names available)
    url(r'^authenticate',  include('django.contrib.auth.urls')),
